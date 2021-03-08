@@ -29,11 +29,9 @@ flow:
         publish:
           - result: could not authenticate
         navigate:
-          - SUCCESS:
-              next_step: run_command
-              ROI: '1'
+          - SUCCESS: change_password
           - FAILURE: on_failure
-    - run_command:
+    - change_password:
         do:
           io.cloudslang.base.cmd.run_command:
             - command: "${'ldappasswd -h '+get_sp('ldapHost')+' -p '+get_sp('ldapPort')+' -D uid='+username+',ou=users,o=bbndemo -x -w '+oldPassword+' -s '+newPassword}"
@@ -58,7 +56,7 @@ extensions:
       check_oldPassword:
         x: 281
         'y': 87
-      run_command:
+      change_password:
         x: 460
         'y': 93
         navigate:
