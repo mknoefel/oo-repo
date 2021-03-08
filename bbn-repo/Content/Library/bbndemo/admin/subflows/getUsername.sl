@@ -4,7 +4,7 @@ operation:
   inputs:
     - testme: eins
   python_action:
-    use_jython: false
+    use_jython: true
     script: |-
       def execute():
           username = "Markus"
