@@ -3,15 +3,12 @@ flow:
   name: passwordReset
   inputs:
     - oldPassword:
-        default: admin@123
         sensitive: true
     - newPassword:
-        default: admin@124
         sensitive: true
     - repeatPassword:
-        default: admin@124
         sensitive: true
-    - username: testuser
+    - username
   workflow:
     - check_new_passwords_are_equal:
         do:
@@ -55,6 +52,12 @@ flow:
 extensions:
   graph:
     steps:
+      check_new_passwords_are_equal:
+        x: 101
+        'y': 93
+      check_oldPassword:
+        x: 281
+        'y': 87
       run_command:
         x: 460
         'y': 93
@@ -62,12 +65,6 @@ extensions:
           07a29203-dba6-629f-b00b-127fb8621cd0:
             targetId: b394e372-9f0d-db14-bee5-3ca3b44d3b89
             port: SUCCESS
-      check_new_passwords_are_equal:
-        x: 101
-        'y': 93
-      check_oldPassword:
-        x: 281
-        'y': 87
     results:
       SUCCESS:
         b394e372-9f0d-db14-bee5-3ca3b44d3b89:

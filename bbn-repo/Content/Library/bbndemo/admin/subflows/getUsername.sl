@@ -2,13 +2,15 @@ namespace: bbndemo.admin.subflows
 operation:
   name: getUsername
   inputs:
-    - testme: eins
+    - myName: eins
   python_action:
     use_jython: true
     script: |-
-      def execute():
-          username = "Markus"
+      username = getuid()
+      error_message = "nok"
   outputs:
+    - error_message
     - username
   results:
-    - SUCCESS
+    - SUCCESS: '${error_message == ""}'
+    - FAILURE
