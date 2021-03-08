@@ -15,8 +15,7 @@ flow:
           io.cloudslang.base.strings.string_equals:
             - first_string: '${newPassword}'
             - second_string: '${repeatPassword}'
-        publish:
-          - result: password mismatch
+        publish: []
         navigate:
           - SUCCESS:
               next_step: check_oldPassword
@@ -27,7 +26,7 @@ flow:
           io.cloudslang.base.cmd.run_command:
             - command: "${'ldapwhoami -vvv -h '+get_sp('ldapHost')+' -p '+get_sp('ldapPort')+' -D uid='+username+',ou=users,o=bbndemo -x -w '+oldPassword}"
         publish:
-          - result: could not authenticate
+          - error_message
         navigate:
           - SUCCESS: change_password
           - FAILURE: on_failure
@@ -37,6 +36,7 @@ flow:
             - command: "${'ldappasswd -h '+get_sp('ldapHost')+' -p '+get_sp('ldapPort')+' -D uid='+username+',ou=users,o=bbndemo -x -w '+oldPassword+' -s '+newPassword}"
         publish:
           - result: '${return_result}'
+          - error_message
         navigate:
           - SUCCESS:
               next_step: SUCCESS
